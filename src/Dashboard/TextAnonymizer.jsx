@@ -1,5 +1,5 @@
 import React from 'react'
-import Form from 'react-bootstrap/Form'
+import Form from 'react-bootstrap'
 import {Button, Alert, Spinner} from 'react-bootstrap'
 import axios from "axios";
 import { BASE_URL_DEV } from "../utils";

@@ -1,8 +1,8 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
-import Accordion from 'react-bootstrap/Accordion';
-import AccordionContext from 'react-bootstrap/AccordionContext';
-import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
+import Card from 'react-bootstrap';
+import Accordion from 'react-bootstrap';
+import AccordionContext from 'react-bootstrap';
+import { useAccordionToggle } from 'react-bootstrap';
 import './accordion.css'; // Import the new CSS file
 import { UserContext } from '../App';  // Import UserContext
 import { useSocket } from '../shared/SocketContext'; // Import the socket context

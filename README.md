@@ -1,9 +1,8 @@
-NODE -v  v14.16.1
-NPM -v  6.14.12 
+# React + Vite
 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**This project was bootstrapped with 
-**
-[Create React App](https://github.com/facebook/create-react-app).
+Currently, two official plugins are available:
 
-https://github.com/BootstrapDash/corona-react-free-admin-template.git
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

@@ -1,14 +1,15 @@
 // @flow
 import React, { useContext, useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+// import { Modal, Button } from "react-bootstrap";
 import { UserContext } from "../App";
 import { Resizable } from "react-resizable";
 import processMd from "./markdown";
 import axios from "axios";
 import { BASE_URL_DEV } from "../utils";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import {  faExclamationCircle, faPlus  } from '@fortawesome/free-solid-svg-icons';
+// import {  faPlus  } from '@fortawesome/free-solid-svg-icons';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import ChatUI from '../shared/Chatbox';
 

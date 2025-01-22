@@ -1,8 +1,8 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
-import Accordion from 'react-bootstrap/Accordion';
-import AccordionContext from 'react-bootstrap/AccordionContext';
-import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
+import Card from 'react-bootstrap';
+import Accordion from 'react-bootstrap';
+import AccordionContext from 'react-bootstrap';
+import { useAccordionToggle } from 'react-bootstrap';
 
 function AccordionGenerator(props) {
 	const [searchInput, setSearchInput] = useState('');

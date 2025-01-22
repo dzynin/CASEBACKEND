@@ -3,7 +3,7 @@ import SelectBox from '../shared/SelectBox';
 import TextBox from '../shared/TextBox';
 import '../Gptstyles.scss';
 import { postGenerateTextEndpoint } from '../shared/GptUtil';
-import Form from 'react-bootstrap/Form'
+// import Form from 'react-bootstrap/Form'
 import {Button, Alert, Spinner} from 'react-bootstrap'
 import axios from "axios";
 // import { BASE_URL_DEV } from "../utils";
