@@ -1,10 +1,11 @@
+//src/Dashboard/FileMetadataViewer
 import React from 'react';
 import { Table, Button } from 'reactstrap';
 
 function FileMetadataViewer({ files, onFileClick }) {
     return (
         <div className="file-metadata-viewer">
-            <h2>Uploaded Files</h2>
+            <h2>Files</h2>
             <Table responsive bordered className="custom-table">
                 <thead>
                     <tr>

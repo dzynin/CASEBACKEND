@@ -42,10 +42,10 @@ function AccordionRenderer({ data }) {
         }
     }, [socket]);
 
-    // Logging to monitor the data updates
-    useEffect(() => {
-        console.log('Accordion Renderer Data:', accordionData);
-    }, [accordionData]);
+    // // Logging to monitor the data updates
+    // useEffect(() => {
+    //     console.log('Accordion Renderer Data:', accordionData);
+    // }, [accordionData]);
 
     useEffect(() => {
         let accordionContainer = myRef.current;

@@ -1,3 +1,4 @@
+//src/Dashboard/MultiFileUpload.js
 import React, { useContext, useState, useCallback, Fragment } from "react";
 import axios from "axios";
 import { Button, Table } from "reactstrap";
@@ -56,6 +57,7 @@ function MultiFileUpload({ onBackClick ,caseName}) {
             setFiles([]);
             setSelectedFiles([]);
             setIsLoading(false);
+            // setting state to signify pdf view should be from upload route 
             dispatch({ type: 'SHOW_METADATA_VIEWER' });
 
             // Fetch highlights and set current file
@@ -119,7 +121,7 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                     lastModified: firstUploadedFile.lastModified
                                 });
                                 dispatch({ type: "SET_CURR_FILE", payload: fileToSet });
-                                // console.log("New SET_CURR_FILE:", fileToSet);
+                                console.log("fileToSet SET_CURR_FILE:", fileToSet);
                             }
                         }
                     } catch (error) {
@@ -151,8 +153,8 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                 type: fileBlob.type,
                 lastModified: file.lastModified || new Date().getTime()
             });
-            // console.log("Setting current file:", fileToSet);
-            // dispatch({ type: 'SET_CURR_FILE', payload: fileToSet });
+            console.log("Setting current file:", fileToSet);
+            dispatch({ type: 'SET_CURR_FILE', payload: fileToSet });
 
             async.eachSeries([file], function (element, cbBatch) {
                 axios.get(`${BASE_URL_DEV}/highlights-json/${state.auth.userPublicId}/${element.name}`, {
@@ -208,6 +210,8 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                 dispatch({ type: "ADD_FILE", payload: fileNew });
                                 dispatch({ type: "SET_MODAL", payload: true });
                                 // Trigger the file viewer
+                                dispatch({ type: "SET_FILE_VIEW_SOURCE", payload: "metadataViewer" });
+
                                 dispatch({ type: "SET_VIEW", payload: { showFileViewer: true } });
                             }
                         } catch (error) {
@@ -218,6 +222,7 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                     console.error("Error in loopErrBatch:", loopErrBatch);
                 }
             });
+
             dispatch({ type: "SET_VIEW", payload: { showFileViewer: true } });
         } catch (error) {
             console.error("Error fetching PDF:", error);

@@ -66,7 +66,12 @@ export const reducer = (state, action) => {
                     showLawsReader: false,
                     ...action.payload
                 };
-    
+        case 'SET_FILE_VIEW_SOURCE':
+                    return {
+                        ...state,
+                        fileViewSource: action.payload,  // Track if the file is from FileMetadataViewer
+                    };
+                
         case 'ALL_POSTS':
             return updateState(state, { allPosts: action.payload });
 
