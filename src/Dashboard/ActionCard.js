@@ -29,16 +29,16 @@ function ActionCard({ onHelpClick }) {
             <CardBody>
                 <Row>
                     <Col lg={3} md={6} xs={12} sm={12}>
-                        <Button className="action-button" onClick={() => handleHelpClick("Pleadings")}>📄 Pleadings</Button>
+                        <Button className="action-button" onClick={() => handleHelpClick("Contract")}>📄 Contract</Button>
                     </Col>
                     <Col lg={3} md={6} xs={12} sm={12}>
-                        <Button className="action-button" onClick={() => handleHelpClick("Discovery")}>🔍 Discovery</Button>
+                        <Button className="action-button" onClick={() => handleHelpClick("Patents")}>🔍 Patents</Button>
                     </Col>
                     <Col lg={3} md={6} xs={12} sm={12}>
-                        <Button className="action-button" onClick={() => handleHelpClick("Trial")}>⚖️ Trial</Button>
+                        <Button className="action-button" onClick={() => handleHelpClick("Litigation")}>⚖️ Litigation</Button>
                     </Col>
                     <Col lg={3} md={6} xs={12} sm={12}>
-                        <Button className="action-button" onClick={() => handleHelpClick("Appeal")}>📜 Appeal</Button>
+                        <Button className="action-button" onClick={() => handleHelpClick("Compliance")}>📜 Compliance</Button>
                     </Col>
                 </Row>
                 <Row className="mt-4 justify-content-center">

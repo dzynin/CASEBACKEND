@@ -123,11 +123,11 @@ function Sidebar() {
                 <SideNav class={state.showFileViewer} click={() => itemClickHandler({ showFileViewer: true })}
                     iconClass='mdi mdi-file' transTitle='Copilot' />
 
-                <SideNav class={false} click={handleTextEditor}
-                    iconClass='mdi mdi-text' transTitle='Notes' />
+                {/* <SideNav class={false} click={handleTextEditor}
+                    iconClass='mdi mdi-text' transTitle='Notes' /> */}
 
-                <SideNav class={state.showTextAnonymizerView} click={() => itemClickHandler({ showTextAnonymizerView: true })}
-                    iconClass='mdi mdi-text' transTitle='Anonymizer' />
+                {/* <SideNav class={state.showTextAnonymizerView} click={() => itemClickHandler({ showTextAnonymizerView: true })}
+                    iconClass='mdi mdi-text' transTitle='Anonymizer' /> */}
 
                 {/* <SideNav class={state.showLawsReader} click={() => itemClickHandler({ showLawsReader: true })}
                     iconClass='mdi mdi-scale-balance' transTitle='Easy-Reader' /> */}
