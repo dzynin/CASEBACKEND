@@ -1,4 +1,3 @@
-//src/Dashboard/MultiFileUpload.js
 import React, { useContext, useState, useCallback, Fragment } from "react";
 import axios from "axios";
 import { Button, Table } from "reactstrap";
@@ -11,8 +10,7 @@ import FileMetadataViewer from './FileMetadataViewer';
 import TriggerFileViewer from './TriggerFileViewer';
 
 const async = require('async');
-
-function MultiFileUpload({ onBackClick ,caseName}) {
+function MultiFileUpload({ onBackClick, caseName, document_class }) {
     const { state, dispatch } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [files, setFiles] = useState([]);
@@ -44,7 +42,10 @@ function MultiFileUpload({ onBackClick ,caseName}) {
 
         const data = new FormData();
         filesToUpload.forEach(file => data.append('files', file));
-        data.append('case_name', caseName);  // Add case name to the FormData
+        data.append('case_name', caseName);  // Append case name
+        data.append('document_class', document_class);  // Append document type
+        console.log('sent document_class', document_class);
+        console.log('sent case_name', caseName);
         setIsLoading(true);
         try {
             const response = await axios.post(`${BASE_URL_DEV}/upload/multiple-files`, data, {
@@ -52,12 +53,10 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                     'x-access-token': state.auth && state.auth.authToken,
                 }
             });
-            // console.log("Upload response:", response.data);
             setUploadedFiles(response.data.files);
             setFiles([]);
             setSelectedFiles([]);
             setIsLoading(false);
-            // setting state to signify pdf view should be from upload route 
             dispatch({ type: 'SHOW_METADATA_VIEWER' });
 
             // Fetch highlights and set current file
@@ -70,11 +69,7 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                     const fileHighlights = result.data;
                     if (fileHighlights && fileHighlights.highlights) {
                         dispatch({ type: "SET_FILE_HIGHLIGHTS", payload: fileHighlights.highlights });
-                        console.log("Setting Accordion Sections:", fileHighlights.highlights );
-
-                        console.log("Setting Accordion Sections:", fileHighlights.highlights.sections || []);
                         dispatch({ type: "SET_ACCORDION_SECTIONS", payload: fileHighlights.highlights.sections || [] });
-
                     }
                     cbBatch(null);
                 }).catch(error => {
@@ -90,7 +85,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                             },
                         });
                         const files = result.data && result.data.files;
-                        // console.log("Fetched files response:", files);
                         if (result && files && files.length > 0) {
                             const results = await axios(`${BASE_URL_DEV}/get-graphdata`, {
                                 headers: {
@@ -98,7 +92,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                 },
                             });
                             const allgraphs = results.data;
-                            // console.log("Graph data response:", allgraphs);
                             let Obj = {};
                             results && allgraphs && allgraphs.graphdata && allgraphs.graphdata.length > 0 && allgraphs.graphdata.filter(x => {
                                 Obj[x.fileName] = x.links.filter(e => e.source === "CITATION" || e.source === "PROVISION");
@@ -108,7 +101,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                 CITATION: Obj[element.name] && Obj[element.name].length > 0 ? Obj[element.name].filter(e => e.source === "CITATION") : ["N/A"],
                                 PROVISION: Obj[element.name] && Obj[element.name].length > 0 ? Obj[element.name].filter(e => e.source === "PROVISION") : ["N/A"]
                             }));
-                            // console.log("New files with citation and provision:", fileNew);
                             dispatch({ type: "ADD_FILE", payload: fileNew });
                             dispatch({ type: "SET_MODAL", payload: true });
 
@@ -121,7 +113,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                     lastModified: firstUploadedFile.lastModified
                                 });
                                 dispatch({ type: "SET_CURR_FILE", payload: fileToSet });
-                                console.log("fileToSet SET_CURR_FILE:", fileToSet);
                             }
                         }
                     } catch (error) {
@@ -131,7 +122,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                     console.error("Error in loopErrBatch:", loopErrBatch);
                 }
             });
-            // dispatch({ type: "SET_VIEW", payload: { showFileViewer: true } });
         } catch (error) {
             console.error("Upload error:", error);
             dispatch({ type: "ERROR", payload: error.response?.statusText || 'File Upload Failed!!' });
@@ -141,7 +131,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
 
     const handleViewPDF = async (file) => {
         try {
-            // console.log("Fetching PDF for file:", file);
             const response = await axios.get(`${BASE_URL_DEV}/uploads/${state.auth.userPublicId}/${file.name}`, {
                 responseType: 'blob',
                 headers: {
@@ -153,7 +142,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                 type: fileBlob.type,
                 lastModified: file.lastModified || new Date().getTime()
             });
-            console.log("Setting current file:", fileToSet);
             dispatch({ type: 'SET_CURR_FILE', payload: fileToSet });
 
             async.eachSeries([file], function (element, cbBatch) {
@@ -163,15 +151,11 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                     }
                 }).then(function (result) {
                     const fileHighlights = result.data;
-                    // console.log("File highlights received:", fileHighlights);
                     if (fileHighlights && fileHighlights.highlights) {
                         dispatch({
                             type: "SET_FILE_HIGHLIGHTS",
                             payload: fileHighlights.highlights,
                         });
-                        // console.log("Setting Accordion Sections:", fileHighlights.highlights.sections || []);
-                        // dispatch({ type: "SET_ACCORDION_SECTIONS", payload: fileHighlights.sections || [] });
-                            
                     }
                     cbBatch(null);
                 }).catch(error => {
@@ -188,7 +172,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                 },
                             });
                             const files = result.data && result.data.files;
-                            // console.log("Fetched files response:", files);
                             if (result && files && files.length > 0) {
                                 const results = await axios(`${BASE_URL_DEV}/get-graphdata`, {
                                     headers: {
@@ -196,7 +179,6 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                     },
                                 });
                                 const allgraphs = results.data;
-                                // console.log("Graph data response:", allgraphs);
                                 let Obj = {};
                                 results && allgraphs && allgraphs.graphdata && allgraphs.graphdata.length > 0 && allgraphs.graphdata.filter(x => {
                                     Obj[x.fileName] = x.links.filter(e => e.source === "CITATION" || e.source === "PROVISION");
@@ -206,12 +188,9 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                                     CITATION: Obj[element.name] && Obj[element.name].length > 0 ? Obj[element.name].filter(e => e.source === "CITATION") : ["N/A"],
                                     PROVISION: Obj[element.name] && Obj[element.name].length > 0 ? Obj[element.name].filter(e => e.source === "PROVISION") : ["N/A"]
                                 }));
-                                // console.log("New files with citation and provision:", fileNew);
                                 dispatch({ type: "ADD_FILE", payload: fileNew });
                                 dispatch({ type: "SET_MODAL", payload: true });
-                                // Trigger the file viewer
                                 dispatch({ type: "SET_FILE_VIEW_SOURCE", payload: "metadataViewer" });
-
                                 dispatch({ type: "SET_VIEW", payload: { showFileViewer: true } });
                             }
                         } catch (error) {
@@ -228,13 +207,13 @@ function MultiFileUpload({ onBackClick ,caseName}) {
             console.error("Error fetching PDF:", error);
         }
     };
-
     return (
         <Fragment>
             <div className="previewComponent">
                 <button className="back-button" onClick={onBackClick}>
                     <IoArrowBackCircle size={40} />
                 </button>
+                {/* Conditionally render drag-and-drop box */}
                 {!state.showMetadataViewer && files.length === 0 && (
                     <div {...getRootProps()} className="drag-drop__area">
                         <input {...getInputProps()} />
@@ -244,6 +223,7 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                         </div>
                     </div>
                 )}
+                {/* Conditionally render file preview and upload button */}
                 {!state.showMetadataViewer && files.length > 0 && (
                     <Fragment>
                         <div className="file-preview">
@@ -288,12 +268,12 @@ function MultiFileUpload({ onBackClick ,caseName}) {
                         </div>
                     </Fragment>
                 )}
+                {/* Conditionally render FileMetadataViewer */}
                 {state.showMetadataViewer && <FileMetadataViewer files={uploadedFiles} onFileClick={handleViewPDF} />}
                 {isLoading && <div className="loading"></div>}
-                {/* <TriggerFileViewer onBackClick={onBackClick} /> */}
             </div>
         </Fragment>
     );
-}
 
+}
 export default MultiFileUpload;

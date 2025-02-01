@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import { Button, Card, CardBody, Row, Col, Input, FormGroup } from "reactstrap";
-
 function ActionCard({ onHelpClick }) {
     const [caseName, setCaseName] = useState("");
     const [inputVisible, setInputVisible] = useState(false);
-    const [selectedAction, setSelectedAction] = useState("");
+    const [selectedAction, setSelectedAction] = useState(""); // Stores the document type
 
     const handleHelpClick = (action) => {
         setInputVisible(true);
-        setSelectedAction(action);  // Save the text of the button clicked in row one, if any
+        setSelectedAction(action); // Store selected document type
     };
 
     const handleSubmit = () => {
         if (caseName.trim() !== "") {
             const caseDetails = {
                 caseName,
-                action: selectedAction
+                document_class: selectedAction // Include document type
             };
-            onHelpClick(caseDetails);
-            setInputVisible(false);  // Optionally reset the UI state
+            onHelpClick(caseDetails.caseName, caseDetails.document_class);
+            setInputVisible(false);
             setCaseName("");
             setSelectedAction("");
         }
@@ -52,7 +51,7 @@ function ActionCard({ onHelpClick }) {
                                     placeholder="Enter case name"
                                 />
                             </FormGroup>
-                            <Button className="important-button" style={{ width: "200px",height:'38px', marginTop: "-2px" }} onClick={handleSubmit}>
+                            <Button className="important-button" style={{ width: "200px", height: '38px', marginTop: "-2px" }} onClick={handleSubmit}>
                                 Submit
                             </Button>
                         </div>
